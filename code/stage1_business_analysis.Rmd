@@ -1,0 +1,65 @@
+```{r}
+library(tidyverse)
+library(dplyr)
+library(ggplot2)
+library(MASS)
+library(stats)
+library(missForest)
+```
+
+```{r}
+business = read.csv("data/business.csv")
+```
+
+
+```{r}
+business
+```
+
+```{r}
+taco = read.csv("data/business_xy.csv")
+```
+
+```{r}
+taco
+```
+
+```{r}
+model1 <-lm(stars ~. , data = taco3)
+summary(model1)
+```
+```{r}
+taco2 <- missForest(taco,ntree = 100)
+```
+
+
+```{r}
+taco3 = taco2$ximp
+taco3
+```
+
+
+
+```{r}
+taco3[,1:160] = round(taco3[,1:160])
+```
+
+
+```{r}
+taco3
+```
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
