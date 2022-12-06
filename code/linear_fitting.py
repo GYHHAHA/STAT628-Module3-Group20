@@ -24,4 +24,5 @@ features = [
 df = pd.read_csv("../data/feature.csv")
 X, y = df[features], df.stars
 est = sm.OLS(y, sm.add_constant(X)).fit()
-print(est.summary())
+with open("../data/ols_result.txt", "w") as f:
+    f.write(est.summary().as_text() + "\n")
