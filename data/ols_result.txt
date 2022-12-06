@@ -1,0 +1,42 @@
+                            OLS Regression Results
+==============================================================================
+Dep. Variable:                  stars   R-squared:                       0.607
+Model:                            OLS   Adj. R-squared:                  0.601
+Method:                 Least Squares   F-statistic:                     92.69
+Date:                Mon, 05 Dec 2022   Prob (F-statistic):          1.10e-170
+Time:                        18:39:18   Log-Likelihood:                -908.98
+No. Observations:                 916   AIC:                             1850.
+Df Residuals:                     900   BIC:                             1927.
+Df Model:                          15
+Covariance Type:            nonrobust
+=====================================================================================================
+                                        coef    std err          t      P>|t|      [0.025      0.975]
+-----------------------------------------------------------------------------------------------------
+const                                 4.9906      0.187     26.732      0.000       4.624       5.357
+[CAT] Italian                         1.3135      0.662      1.983      0.048       0.014       2.614
+[TIME] Total Time                    -0.0346      0.008     -4.432      0.000      -0.050      -0.019
+[CAT] Tex-Mex                        -0.3144      0.065     -4.860      0.000      -0.441      -0.187
+[CAT] Japanese                        1.0674      0.383      2.789      0.005       0.316       1.818
+[CAT] Hardware Stores                 0.7115      0.330      2.157      0.031       0.064       1.359
+[CAT] Home & Garden                   0.7115      0.330      2.157      0.031       0.064       1.359
+[ATTR] Alcohol                       -0.1859      0.082     -2.260      0.024      -0.347      -0.024
+[CAT] Fast Food                      -1.1107      0.073    -15.151      0.000      -1.255      -0.967
+[CAT] Local Flavor                   -0.6394      0.304     -2.104      0.036      -1.236      -0.043
+[CAT] Puerto Rican                    0.9853      0.468      2.103      0.036       0.066       1.905
+[CAT] Food Stands                     0.2900      0.133      2.179      0.030       0.029       0.551
+[ATTR] BusinessAcceptsCreditCards    -0.5408      0.122     -4.432      0.000      -0.780      -0.301
+[CAT] Arts & Entertainment           -0.5670      0.276     -2.052      0.040      -1.109      -0.025
+[CAT] Food Trucks                     0.2765      0.073      3.802      0.000       0.134       0.419
+[CAT] Tacos                           0.2316      0.053      4.373      0.000       0.128       0.336
+[ATTR] DriveThru                     -0.3063      0.101     -3.032      0.003      -0.505      -0.108
+==============================================================================
+Omnibus:                        2.403   Durbin-Watson:                   1.888
+Prob(Omnibus):                  0.301   Jarque-Bera (JB):                2.436
+Skew:                           0.047   Prob(JB):                        0.296
+Kurtosis:                       3.235   Cond. No.                     4.36e+17
+==============================================================================
+
+Notes:
+[1] Standard Errors assume that the covariance matrix of the errors is correctly specified.
+[2] The smallest eigenvalue is 8.97e-31. This might indicate that there are
+strong multicollinearity problems or that the design matrix is singular.
