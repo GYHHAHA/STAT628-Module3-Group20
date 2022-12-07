@@ -1,0 +1,106 @@
+---
+title: "Linear Regression Analysis of Business Data of Taco Restaurants"
+output: "html_document"
+---
+
+```{r}
+library(tidyverse)
+library(dplyr)
+library(ggplot2)
+library(MASS)
+library(stats)
+library(leaps)
+library(missMethods)
+library(regclass)
+```
+
+```{r}
+business = read.csv("data/business.csv")
+```
+
+
+```{r}
+business
+```
+
+`
+
+
+```{r}
+taco = read.csv("data/business_xy.csv")
+```
+
+
+```{r}
+for_plot <- taco[,150:161] ##only choose attributes and time// we only select those retaurants with "taco, restaurants" in the name of the business
+```
+
+
+
+We would like to contain no more than 5 variables in our regression model for the simplicity of explanation. First we use all subsets regression to select the best model with no more than 5 indicators.  
+```{r}
+impute_plot <- impute_mode(for_plot, type = "columnwise", convert_tibble = TRUE)
+step.model <- regsubsets(stars~., data = impute_plot, nvmax=5, method = "seqrep")
+summary(step.model)
+```
+
+```{r}
+res.sum <- summary(step.model)
+data.frame(
+  Adj.R2 = res.sum$adjr2,
+  CP =res.sum$cp,
+  BIC = res.sum$bic
+)
+```
+From the value of these three metrics, it shows that regression model with 5 indicators Outdoor Seating, Bike Parking, Restaurants TakeOut, Restaurants Delivery , and Weekends is the 'best' model
+
+
+```{r}
+model1 <-lm(stars ~ X.ATTR..BikeParking+X.TIME..Weekends+X.ATTR..RestaurantsTakeOut+X.ATTR..RestaurantsDelivery+X.ATTR..OutdoorSeating , data = for_plot)
+summary(model1)
+```
+
+Since one-hot encoding will make the linear regression model suffer multicolinearity, we use variance inflation factor to check. The value of VIF is less than 5 as well as $\frac{1}{1-R^2} = 1.883239$, which means our model does not suffer severe multicolineairty and can provide statistical significant explanations.
+
+```{r}
+VIF(model1)
+```
+
+```{r}
+1/(1-0.469)
+```
+
+
+```{r}
+na.omit(for_plot[c("X.ATTR..OutdoorSeating","stars")])%>%
+  group_by(X.ATTR..OutdoorSeating)%>%
+  summarise(good = sum(stars>=3)/n())
+na.omit(for_plot[c("X.ATTR..BikeParking","stars")])%>%
+  group_by(X.ATTR..BikeParking)%>%
+  summarise(good = sum(stars>=3)/n())
+na.omit(for_plot[c("X.TIME..Weekends","stars")])%>%
+  group_by(X.TIME..Weekends)%>%
+  summarise(good = sum(stars>=3)/n())
+na.omit(for_plot[c("X.ATTR..RestaurantsTakeOut","stars")])%>%
+  group_by(X.ATTR..RestaurantsTakeOut)%>%
+  summarise(good = sum(stars>=3)/n())
+na.omit(for_plot[c("X.ATTR..RestaurantsDelivery","stars")])%>%
+  group_by(X.ATTR..RestaurantsDelivery)%>%
+  summarise(good = sum(stars>=3)/n())
+```
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
