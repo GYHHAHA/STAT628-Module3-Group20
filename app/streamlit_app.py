@@ -87,7 +87,7 @@ if __name__ == "__main__":
     )
 
     st.sidebar.title("Suggestions for Taco Restaurants")
-    st.sidebar.image("taco.jpg", width=200)
+    st.sidebar.image(st.secrets["taco_img"], width=200)
     st.sidebar.write(
         """
         This app is maintained by Group-20 
