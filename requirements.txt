@@ -1,0 +1,4 @@
+pandas
+gsheetsdb
+folium
+streamlit_folium
