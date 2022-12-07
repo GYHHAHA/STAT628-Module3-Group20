@@ -7,10 +7,10 @@ df_business = pd.read_pickle("../data/business.pkl")
 df_review = pd.read_pickle("../data/review.pkl")
 
 cat_map = {
-    0: [4],
-    1: [4],
-    2: [3, 5],
-    3: [3, 4, 5],
+    0:[3],
+    1: [3],
+    2: [2, 4],
+    3: [2, 3, 4],
     4: [2, 3, 4, 5],
 }
 
