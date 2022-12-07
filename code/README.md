@@ -7,4 +7,5 @@ Codes should be run by the following order:
 2. generate_fea.py
 3. feature_select.py
 4. linear_fitting.py
+5. normalize_star.py
 ```
