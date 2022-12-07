@@ -45,33 +45,35 @@ if __name__ == "__main__":
         except:
             shop = pd.read_pickle("../data/raw_business.pkl")
             review = pd.read_pickle("../data/raw_review.pkl")
-        return shop, review
+        data = {
+            state: {
+                city: {
+                    name: {
+                        address
+                        for address in shop[
+                            (shop.state==state)
+                            & (shop.city==city)
+                            & (shop.name==name)
+                        ].address.unique()
+                        if address != ""
+                    }
+                    for name in shop[
+                        (shop.state==state)
+                        & (shop.city==city)
+                    ].name.unique()
+                }
+                for city in shop[shop.state==state].city.unique()
+            }
+            for state in shop.state.unique()
+        }
+        return shop, review, data
 
-    shop, review = load_data()
+    shop, review, data = load_data()
     shop = shop.drop_duplicates(
         ["state", "city", "name", "address"], keep="first",
     ).reset_index(drop=True)
 
-    data = {
-        state: {
-            city: {
-                name: {
-                    address
-                    for address in shop[
-                        (shop.state==state)
-                        & (shop.city==city)
-                        & (shop.name==name)
-                    ].address.unique()
-                }
-                for name in shop[
-                    (shop.state==state)
-                    & (shop.city==city)
-                ].name.unique()
-            }
-            for city in shop[shop.state==state].city.unique()
-        }
-        for state in shop.state.unique()
-    }
+
 
     st.markdown(
         """
@@ -126,7 +128,7 @@ if __name__ == "__main__":
     pros, cons = ["adsf", "waef", "ewfae"], ["adsf", "waef", "ewfae"]
     st.title("Suggestion")
     st.write("**Name**: " + name)
-    st.write("**Address**: " + address)
+    st.write("**Address**: " + "unknown" if address is None else address)
     st.write("**Pros**:")
     for i in pros:
         st.markdown(f"- {i}")
@@ -143,11 +145,13 @@ if __name__ == "__main__":
 
     st.title("Location")
 
+    if (address == "None") or (address is None):
+        address = ""
     rec = shop[
         (shop.state==state)
         & (shop.city==city)
         & (shop.name==name)
-        & (shop.address==address)
+        & (shop.address.fillna("")==address)
     ].iloc[0]
     loc = [rec["latitude"], rec["longitude"]]
     m = folium.Map(location=loc, zoom_start=16)
