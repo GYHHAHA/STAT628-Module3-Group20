@@ -93,7 +93,7 @@ if __name__ == "__main__":
     st.sidebar.write(
         """
         This app is maintained by Group-20 
-        (YUANHAO GENG, Xuelan Qian, Zhanpeng Xu and Xinyu Li).
+        (Yuanhao Geng, Xuelan Qian, Zhanpeng Xu and Xinyu Li).
         If you have any question about this app, 
          please contact us through geng29@wisc.edu.
         """
