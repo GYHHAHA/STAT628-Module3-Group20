@@ -17,7 +17,7 @@
     - linear_fitting.py	
     - word_cloud.py	
     - word_freq_hist.py
-- data:  					
+- data: All the data needed by the code or the output of the code  					
     - README.md: order that codes should be run.
     - Adjectives.json		
     - ols_result.txt
@@ -34,5 +34,7 @@
 - images : All pictures for slides and final report.
     - wordcloud.png
     - word_freq_hist
+    - qqplot.png
+    - standardizedres_vs_fitted.png
 - index.html		
 - requirements.txt
