@@ -128,7 +128,7 @@ if __name__ == "__main__":
     pros, cons = ["adsf", "waef", "ewfae"], ["adsf", "waef", "ewfae"]
     st.title("Suggestion")
     st.write("**Name**: " + name)
-    st.write("**Address**: " + "unknown" if address is None else address)
+    st.write("**Address**: " + ("unknown" if address is None else address))
     st.write("**Pros**:")
     for i in pros:
         st.markdown(f"- {i}")
