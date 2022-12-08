@@ -3,6 +3,7 @@ from streamlit_folium import st_folium
 from gsheetsdb import connect
 import streamlit as st
 import pandas as pd
+import numpy as np
 
 
 if __name__ == "__main__":
@@ -66,9 +67,28 @@ if __name__ == "__main__":
             }
             for state in shop.state.unique()
         }
-        return shop, review, data
+        return shop, review, data, [
+            [[
+                "Your service improves your ratings a lot!",
+                "Your dish improves your ratings a lot!",
+                "Your environment improves your ratings a lot!",
+            ], [
+                "Good to hear you have friendly waiters.",
+                "Wow! Great to find that people like your shrimp dish!",
+                "People are having great experience given your nice environment!",
+            ]],
+            [[
+                "Too many complaints about waiting time!",
+                "How about improving your service?",
+                "You could make your dishes better!",
+            ], [
+                "Some guests are complaining that your beef is not good.",
+                "Why don’t you try to make good environment?",
+                "It will be better with improving your shrimp dish.",
+            ]],
+        ]
 
-    shop, review, data = load_data()
+    shop, review, data, pc = load_data()
     shop = shop.drop_duplicates(
         ["state", "city", "name", "address"], keep="first",
     ).reset_index(drop=True)
@@ -125,15 +145,18 @@ if __name__ == "__main__":
         """
     st.markdown(hide_table_row_index, unsafe_allow_html=True)
 
-    pros, cons = ["adsf", "waef", "ewfae"], ["adsf", "waef", "ewfae"]
+    pros, cons = pc[0], pc[1]
     st.title("Suggestion")
     st.write("**Name**: " + name)
     st.write("**Address**: " + ("unknown" if address is None else address))
+    np.random.seed(len(address) + len(name))
+    a1, a2, a3, a4 = np.random.choice([0, 1, 2], 4)
     st.write("**Pros**:")
-    for i in pros:
-        st.markdown(f"- {i}")
+    st.markdown(f"- {pros[0][a1]}")
+    st.markdown(f"- {pros[1][a2]}")
     st.write("**Cons**:")
-    st.markdown("".join([f"- {i} " for i in cons]))
+    st.markdown(f"- {cons[0][a3]}")
+    st.markdown(f"- {cons[1][a4]}")
 
     st.markdown('''
     <style>
