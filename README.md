@@ -30,6 +30,7 @@
     - raw_review.pkl
 - slides: slides for two presentations.
     - First Presentation.pptx
+    - STAT628 _ Yelp Dataset Tcao Business Analysis.pptx
 - images : All pictures for slides and final report.
     - wordcloud.png
     - word_freq_hist
