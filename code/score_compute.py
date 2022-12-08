@@ -11,19 +11,19 @@ with open("../data/normalized_stars.npy", "rb") as f:
 adj_list = [
     'bad', 'worst', 'fresh', 'ridiculous', 'nice',
     'yummy', 'wonderful', 'awful', 'good', 'great',
-    'rude', 'friendly', 'helpful', 'welcoming', 'warm',
-    'fast', 'clean', 'warm', 'crowded', 'dirty'
+    'rude', 'friendly', 'helpful', 'welcoming',
+    'fast', 'clean', 'warm', 'dirty'
 ]
 adj_map = dict(zip(adj_list, [0] * len(adj_list)))
 for adj in adj_list:
     condition = raw_review.text.str.contains(adj, case=False)
     adj_map[adj] = stars[condition.values].mean() - 3
 all_n = {
-    "ingredient": [
+    "dish": [
         "shrimp", "rib", "beef", "fish",
         "chicken", "peach", "carne asada", "tortilla"
     ],
-    "source": [
+    "sauce": [
         "salsa", "guacamole", "chipotle", "nacho cheese", "green sauce"
     ],
     "service": ["service", "waiter"],
