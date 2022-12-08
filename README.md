@@ -30,7 +30,7 @@
     - raw_review.pkl
 - slides: slides for two presentations.
     - First Presentation.pptx
-- pictures : All pictures for slides and final report.
+- images : All pictures for slides and final report.
     - wordcloud.png
     - word_freq_hist
 - index.html		
