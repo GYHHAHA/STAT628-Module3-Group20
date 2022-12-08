@@ -2,3 +2,4 @@ pandas
 gsheetsdb
 folium
 streamlit_folium
+pyparsing
