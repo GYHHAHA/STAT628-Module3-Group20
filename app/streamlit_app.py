@@ -149,7 +149,7 @@ if __name__ == "__main__":
     st.title("Suggestion")
     st.write("**Name**: " + name)
     st.write("**Address**: " + ("unknown" if address is None else address))
-    np.random.seed(len(address) + len(name))
+    np.random.seed(len(address) if address is not None else 0 + len(name))
     a1, a2, a3, a4 = np.random.choice([0, 1, 2], 4)
     st.write("**Pros**:")
     st.markdown(f"- {pros[0][a1]}")
