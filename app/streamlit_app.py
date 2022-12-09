@@ -33,7 +33,7 @@ if __name__ == "__main__":
                         'business_id', 'name', 'address', 'city',
                         'state', 'postal_code', 'latitude', 'longitude',
                         'stars', 'review_count', 'is_open', 'attributes',
-                        'categories', 'hours'
+                        'categories', 'hours', 'good', 'bad'
                     ]
                 }
             )
@@ -67,28 +67,9 @@ if __name__ == "__main__":
             }
             for state in shop.state.unique()
         }
-        return shop, review, data, [
-            [[
-                "Your service improves your ratings a lot!",
-                "Your dish improves your ratings a lot!",
-                "Your environment improves your ratings a lot!",
-            ], [
-                "Good to hear you have friendly waiters.",
-                "Wow! Great to find that people like your shrimp dish!",
-                "People are having great experience given your nice environment!",
-            ]],
-            [[
-                "Too many complaints about waiting time!",
-                "How about improving your service?",
-                "You could make your dishes better!",
-            ], [
-                "Some guests are complaining that your beef is not good.",
-                "Why don’t you try to make good environment?",
-                "It will be better with improving your shrimp dish.",
-            ]],
-        ]
+        return shop, review, data
 
-    shop, review, data, pc = load_data()
+    shop, review, data = load_data()
     shop = shop.drop_duplicates(
         ["state", "city", "name", "address"], keep="first",
     ).reset_index(drop=True)
@@ -145,18 +126,47 @@ if __name__ == "__main__":
         """
     st.markdown(hide_table_row_index, unsafe_allow_html=True)
 
-    pros, cons = pc[0], pc[1]
+    #pros, cons = pc[0], pc[1]
     st.title("Suggestion")
     st.write("**Name**: " + name)
     st.write("**Address**: " + ("unknown" if address is None else address))
     np.random.seed(len(address) if address is not None else 0 + len(name))
     a1, a2, a3, a4 = np.random.choice([0, 1, 2], 4)
+
+    if (address == "None") or (address is None):
+        address = ""
+    rec = shop[
+        (shop.state==state)
+        & (shop.city==city)
+        & (shop.name==name)
+        & (shop.address.fillna("")==address)
+    ].iloc[0]
+
     st.write("**Pros**:")
-    st.markdown(f"- {pros[0][a1]}")
-    st.markdown(f"- {pros[1][a2]}")
+    w1, w2 = rec["good"], rec["bad"]
+    cat1, w1 = tuple(w1.split("_"))
+    st.markdown(f"Your {cat1} improves your ratings a lot!")
+    if cat1 in ["dish", "souce"]:
+        if np.random.rand() < 0.5:
+            st.markdown(f"Wow! Great to find that people like your {w1}!")
+        else:
+            st.markdown(f"Good to hear you have nice {w1}.")
+    else:
+        st.markdown(f"People are having great experience given your nice {w1}!")
+    #st.markdown(f"- {pros[0][a1]}")
+    #st.markdown(f"- {pros[1][a2]}")
     st.write("**Cons**:")
-    st.markdown(f"- {cons[0][a3]}")
-    st.markdown(f"- {cons[1][a4]}")
+    cat2, w2 = tuple(w2.split("_"))
+    st.markdown(f"Too many complaints about {cat2}!")
+    if cat2 in ["dish", "souce"]:
+        if np.random.rand() < 0.5:
+            st.markdown(f"Some guests are complaining that your {w2} is not good.")
+        else:
+            st.markdown(f"It will be better with improving your {w2}.")
+    else:
+        st.markdown(f"Why don't you try to have good {w2}?")
+    #st.markdown(f"- {cons[0][a3]}")
+    #st.markdown(f"- {cons[1][a4]}")
 
     st.markdown('''
     <style>
@@ -168,14 +178,6 @@ if __name__ == "__main__":
 
     st.title("Location")
 
-    if (address == "None") or (address is None):
-        address = ""
-    rec = shop[
-        (shop.state==state)
-        & (shop.city==city)
-        & (shop.name==name)
-        & (shop.address.fillna("")==address)
-    ].iloc[0]
     loc = [rec["latitude"], rec["longitude"]]
     m = folium.Map(location=loc, zoom_start=16)
     folium.Marker(loc, popup=name, tooltip=name).add_to(m)
