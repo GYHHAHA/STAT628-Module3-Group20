@@ -15,8 +15,8 @@
     - score_compute.py
     - lm_business_data.Rmd
     - linear_fitting.py	
-    - word_cloud.py	
-    - word_freq_hist.py
+    - word_cloud.py: including the code for making wordcloud of tips and chi-square test.
+    - word_freq_hist.py: used to plot histograms of word frequency for each aspect.
 - data: All the data needed by the code or the output of the code  					
     - README.md: order that codes should be run.
     - Adjectives.json		
